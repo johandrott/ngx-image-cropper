@@ -113,18 +113,20 @@ export class ImageCropperComponent {
         fileReader.readAsDataURL(event.target.files[0]);
     }
 
+    public imageDataUrlLoaded(): void {
+        this.resetCropperPosition();
+        this.imageLoaded.emit();
+    }
+
     private loadBase64Image(imageBase64: string) {
         this.originalImage = new Image();
         this.originalImage.onload = () => {
             this.originalSize.width = this.originalImage.width;
             this.originalSize.height = this.originalImage.height;
-            this.imageLoaded.emit();
         };
+
         this.imgDataUrl = imageBase64;
         this.originalImage.src = imageBase64;
-        setTimeout(() => {
-            this.resetCropperPosition();
-        }, 1);
     }
 
     private resetCropperPosition() {
